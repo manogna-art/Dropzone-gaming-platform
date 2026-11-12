@@ -1,0 +1,2 @@
+import { AuthForm } from "@/components/auth-form";
+export default function Signup(){return <div className="page-wrap"><div className="panel" style={{maxWidth:540,margin:"35px auto"}}><div className="eyebrow">JOIN THE COMMUNITY</div><h1 className="page-title">Create your account</h1><p className="muted">Registration is free. Entries are issued by giveaway administrators.</p><AuthForm mode="signup"/></div></div>}

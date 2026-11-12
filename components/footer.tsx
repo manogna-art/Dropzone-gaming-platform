@@ -1,0 +1,1 @@
+export function Footer(){return <footer className="footer"><span>© {new Date().getFullYear()} DROPZONE · COMMUNITY GAMING REWARDS</span><span>Free-entry platform · Rules apply</span></footer>}
