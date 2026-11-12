@@ -1,0 +1,41 @@
+name: Extract Website ZIP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP
+        run: |
+          mkdir _unzip
+          unzip -q dropzone-gaming-platform-v2.zip -d _unzip
+
+          dirs=$(find _unzip -mindepth 1 -maxdepth 1 -type d | wc -l)
+          files=$(find _unzip -mindepth 1 -maxdepth 1 -type f | wc -l)
+
+          if [ "$dirs" -eq 1 ] && [ "$files" -eq 0 ]; then
+            root=$(find _unzip -mindepth 1 -maxdepth 1 -type d | head -n 1)
+            cp -a "$root"/. .
+          else
+            cp -a _unzip/. .
+          fi
+
+          rm -rf _unzip
+          rm -f dropzone-gaming-platform-v2.zip
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract website project files" || echo "No changes"
+          git push
